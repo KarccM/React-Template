@@ -29,6 +29,5 @@ export const Any = () => {
     },
   });
 
-  return <>{console.log(users)}</>;
 };
 */

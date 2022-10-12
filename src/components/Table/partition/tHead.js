@@ -2,7 +2,7 @@ import React from 'react';
 
 const Thead = ({ headerGroups, showFilters }) => {
   return (
-    <thead className={`bg-red-900 text-gray-50 `}>
+    <thead className={`bg-blue-700 text-gray-50  `}>
       {headerGroups.map((headerGroup) => (
         <tr {...headerGroup.getHeaderGroupProps()}>
           {headerGroup.headers.map((column) => (

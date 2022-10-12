@@ -17,7 +17,9 @@ const Delete = ({ id }) => {
 
   return (
     <button onClick={handleDelete}>
-      <span class="material-symbols-outlined">delete</span>
+      <span className="bg-red-500 rounded-full text-gray-50 font-extrabold px-2 flex items-center">
+        -
+      </span>
     </button>
   );
 };

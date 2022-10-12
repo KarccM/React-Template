@@ -1,9 +1,12 @@
 import React from 'react';
+import CircularProgress from '@mui/material/CircularProgress';
+import Error403 from '../../components/error403';
 
-const sleep = (time) => new Promise((resolve) => setTimeout(resolve, time));
+// const sleep = (time) => new Promise((resolve) => setTimeout(resolve, time));
 
-const getUser = () => sleep(1000).then(() => ({ username: 'elmo' }));
-// .then(() => null)
+// const getUser = () =>
+//   sleep(1000) //.then(() => ({ username: 'elmo' }));
+//     .then(() => null);
 
 const AuthContext = React.createContext();
 export function AuthProvider({ children }) {
@@ -22,14 +25,11 @@ export function AuthProvider({ children }) {
   return (
     <AuthContext.Provider value={state}>
       {state.status === 'pending' ? (
-        'Loading...'
-      ) : state.status === 'error' ? (
-        <div>
-          Oh no
-          <div>
-            <pre>{state.error.message}</pre>
-          </div>
+        <div className="text-center flex h-screen justify-center items-center">
+          <CircularProgress />
         </div>
+      ) : state.status === 'error' ? (
+        <Error403 />
       ) : (
         children
       )}
@@ -37,7 +37,7 @@ export function AuthProvider({ children }) {
   );
 }
 
-function useAuthState() {
+export function useAuthState() {
   const state = React.useContext(AuthContext);
   const isPending = state.status === 'pending';
   const isError = state.status === 'error';

@@ -5,11 +5,12 @@ interface Input {
 
 type Option = { 
     label: string,
-    value: string
+    id: number
 }
 
 export type MaterialInput = Input &{
-    value: string | number
+    defaultValue: string | number 
+    error:boolean
 };
 
 export type MaterialSelect = Input & { 

@@ -10,6 +10,7 @@ import PageNav from './partition/pageNav';
 import PageCounter from './partition/pageCounter';
 import Thead from './partition/tHead';
 import Tbody from './partition/tBody';
+import { NavLink } from 'react-router-dom';
 
 const Table = ({ columns, data, defaultColumn }) => {
   const [showFilters, setShowFilters] = useState(false);
@@ -42,17 +43,26 @@ const Table = ({ columns, data, defaultColumn }) => {
   const { globalFilter, pageIndex } = state;
   return (
     <div class="w-4/5 mx-auto">
-      <div className="flex justify-start items-center gap-x-2 mt-2 mb-8">
+      <div className="flex justify-between items-center gap-x-2 mt-2 mb-8">
         <GlobalFilter filter={globalFilter} setGlobalFilter={setGlobalFilter} />
-        <button
-          onClick={() => {
-            setShowFilters(!showFilters);
-          }}
-        >
-          Filters
-        </button>
+        <div className="flex flex-col gap-y-1">
+          <NavLink
+            className={'bg-red-500 text-white rounded-md px-2 py-1'}
+            to={'add'}
+          >
+            ADD user
+          </NavLink>
+          <button
+            className={'bg-blue-600 text-white rounded-md px-2 py-1'}
+            onClick={() => {
+              setShowFilters(!showFilters);
+            }}
+          >
+            show Filters
+          </button>
+        </div>
       </div>
-      <table {...getTableProps()} className="w-full  bg-gray-100 ">
+      <table {...getTableProps()} className="w-full  bg-gray-50 ">
         <Thead headerGroups={headerGroups} showFilters={showFilters} />
         <Tbody
           page={page}

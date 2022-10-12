@@ -5,7 +5,8 @@ const TableRow = ({ row }) => {
   return (
     <tr
       {...row.getRowProps()}
-      className="py-2 border-b cursor-pointer hover:bg-red-100 "
+      className="border-b cursor-pointer hover:bg-blue-200  "
+      to={'/'}
     >
       {row.cells.map((cell) => {
         return <TableData cell={cell} />;
