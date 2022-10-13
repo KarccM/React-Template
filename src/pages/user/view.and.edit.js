@@ -1,6 +1,6 @@
 import React from 'react';
 import { useQuery } from 'react-query';
-import { Navigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { getUserById } from '../../api/usersApi';
 import Input from '../../components/material-input-fields/material.input.tsx';
 import { resolver } from '../../Containers/users/singel.user';
@@ -36,7 +36,7 @@ const User = () => {
     updateUserMutation.mutate({ user: data });
     setEditMode(false);
   };
-
+  const navigate = useNavigate();
   return (
     <div>
       {!isError ? (
@@ -106,6 +106,12 @@ const User = () => {
                   onClick={() => setEditMode(true)}
                 >
                   Edit
+                </button>
+                <button
+                  className="bg-gray-500 text-white rounded-md"
+                  onClick={() => navigate(-1)}
+                >
+                  Back
                 </button>
               </div>
             </div>

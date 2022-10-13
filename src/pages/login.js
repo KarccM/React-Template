@@ -4,17 +4,24 @@ import { useAuthState } from '../context/Auth';
 import { useForm } from 'react-hook-form';
 import Input from '../components/material-input-fields/material.input.tsx';
 import { Navigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Login = () => {
-  const { isAuthenticated } = useAuthState();
+  const { isAuthenticated, login } = useAuthState();
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver });
 
-  const onSubmit = (data) => {
-    console.log(`data`, data);
+  const onSubmit = async (data) => {
+    const response = await axios.post(
+      'http://192.168.1.115:3005/auth/admin/login',
+      data
+    );
+
+    let { access_token: token } = response.data;
+    login(data, token);
   };
 
   return (

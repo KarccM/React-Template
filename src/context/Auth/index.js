@@ -2,24 +2,33 @@ import React from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
 import Error403 from '../../components/error403';
 
-// const sleep = (time) => new Promise((resolve) => setTimeout(resolve, time));
-
-// const getUser = () =>
-//   sleep(1000) //.then(() => ({ username: 'elmo' }));
-//     .then(() => null);
-
 const AuthContext = React.createContext();
 export function AuthProvider({ children }) {
   const [state, setState] = React.useState({
-    status: 'pending',
+    status: 'success',
     error: null,
     user: null,
+    token: null,
+    login: (user, token) => {
+      setState({ ...state, user, token, status: 'success' });
+      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('token', JSON.stringify(token));
+    },
+    logout: () => {
+      setState({ ...state, user: null });
+      localStorage.removeItem('user');
+      localStorage.removeItem('token');
+    },
   });
+
   React.useEffect(() => {
-    getUser().then(
-      (user) => setState({ status: 'success', error: null, user }),
-      (error) => setState({ status: 'error', error, user: null })
-    );
+    let token = localStorage.getItem('token')
+      ? JSON.parse(localStorage.getItem('token'))
+      : false;
+    let user = localStorage.getItem('user')
+      ? JSON.parse(localStorage.getItem('user'))
+      : false;
+    if (token) setState({ ...state, token, user });
   }, []);
 
   return (

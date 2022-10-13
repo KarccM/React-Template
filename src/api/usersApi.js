@@ -2,6 +2,11 @@ import axios from 'axios';
 
 export const userApi = axios.create({
   baseURL: 'http://localhost:3000/users',
+  headers: {
+    'Access-Control-Allow-Headers': 'Access-Control-Allow-Headers',
+    'Access-Control-Allow-Origin': '*',
+    'Content-Type': 'application/json',
+  },
 });
 
 export const getUsers = async () => {
@@ -15,7 +20,6 @@ export const getUserById = async ({ queryKey }) => {
   return response.data;
 };
 export const addUsers = async (user) => {
-  console.log(user);
   return await userApi.post('/', user);
 };
 export const updateUsers = async ({ user }) => {

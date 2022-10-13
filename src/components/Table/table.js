@@ -5,15 +5,16 @@ import {
   usePagination,
 } from 'react-table';
 import GlobalFilter from './filters/globalFilter';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import PageNav from './partition/pageNav';
 import PageCounter from './partition/pageCounter';
 import Thead from './partition/tHead';
 import Tbody from './partition/tBody';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useSearchParams } from 'react-router-dom';
 
 const Table = ({ columns, data, defaultColumn }) => {
   const [showFilters, setShowFilters] = useState(false);
+  const [pageNumber, setPageNumber] = useSearchParams({ pageNumber: 0 });
   const {
     getTableProps,
     getTableBodyProps,
@@ -33,6 +34,7 @@ const Table = ({ columns, data, defaultColumn }) => {
       data,
       defaultColumn,
       initialState: {
+        pageIndex: pageNumber ? parseInt(pageNumber.get('pageNumber')) : 0,
         pageSize: 20,
       },
     },
@@ -40,9 +42,14 @@ const Table = ({ columns, data, defaultColumn }) => {
     useGlobalFilter,
     usePagination
   );
+
+  React.useEffect(() => {
+    setPageNumber({ pageNumber: pageIndex });
+  }, [state]);
+
   const { globalFilter, pageIndex } = state;
   return (
-    <div class="w-4/5 mx-auto">
+    <div class="w-5/6 mx-auto">
       <div className="flex justify-between items-center gap-x-2 mt-2 mb-8">
         <GlobalFilter filter={globalFilter} setGlobalFilter={setGlobalFilter} />
         <div className="flex flex-col gap-y-1">
@@ -77,7 +84,11 @@ const Table = ({ columns, data, defaultColumn }) => {
           nextPage={nextPage}
           canNextPage={canNextPage}
         />
-        <PageCounter pageIndex={pageIndex} pageOptions={pageOptions} />
+        <PageCounter
+          // pageIndex={parseInt(pageIndex)}
+          pageIndex={pageIndex}
+          pageOptions={pageOptions}
+        />
       </tfooter>
     </div>
   );

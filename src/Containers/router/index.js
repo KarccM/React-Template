@@ -21,7 +21,7 @@ export const router = createBrowserRouter([
     element: <Register />,
   },
   {
-    path: '/users',
+    path: '/users/*',
     element: <Users />,
     errorElement: <Error404 />,
   },
@@ -30,7 +30,7 @@ export const router = createBrowserRouter([
     element: <Add />,
   },
   {
-    path: '/users/:id',
+    path: '/user/:id',
     element: <User />,
   },
 ]);

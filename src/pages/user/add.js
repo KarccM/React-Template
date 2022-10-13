@@ -4,7 +4,7 @@ import { resolver } from '../../Containers/users/add';
 import Input from '../../components/material-input-fields/material.input.tsx';
 import { useMutation, useQueryClient } from 'react-query';
 import { addUsers } from '../../api/usersApi';
-import { Navigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuthState } from '../../context/Auth';
 import Error401 from '../../components/error403';
 const Add = () => {
@@ -16,13 +16,13 @@ const Add = () => {
     },
   });
 
+  const navigate = useNavigate();
   const onSubmit = (data) => {
-    console.log(`data`, data);
     addUserMutation.mutate(data);
-    Navigate('/users');
+    navigate('/users/?pageNumber=49');
   };
 
-  const { isAuthenticated } = useAuthState;
+  const { isAuthenticated } = useAuthState();
 
   return (
     <>
@@ -63,6 +63,12 @@ const Add = () => {
             >
               ADD user
             </button>
+            <NavLink
+              className="bg-gray-500 rounded-md text-white px-2"
+              to={'/users'}
+            >
+              Cancel
+            </NavLink>
           </form>
         </div>
       ) : (

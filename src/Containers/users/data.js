@@ -11,7 +11,7 @@ export const columns = [
     disableFilters: true,
     Cell: ({ cell }) => {
       return (
-        <NavLink className={'px-10'} to={`${cell.row.values.id}`}>
+        <NavLink className={'px-10'} to={`/user/${cell.row.values.id}`}>
           {cell.value}
         </NavLink>
       );
@@ -22,7 +22,7 @@ export const columns = [
     accessor: 'first_name',
     Cell: ({ cell }) => {
       return (
-        <NavLink className={'px-10'} to={`${cell.row.values.id}`}>
+        <NavLink className={'px-10'} to={`/user/${cell.row.values.id}`}>
           {cell.value}
         </NavLink>
       );
@@ -33,7 +33,7 @@ export const columns = [
     accessor: 'last_name',
     Cell: ({ cell }) => {
       return (
-        <NavLink className={'px-10'} to={`${cell.row.values.id}`}>
+        <NavLink className={'px-10'} to={`/user/${cell.row.values.id}`}>
           {cell.value}
         </NavLink>
       );
@@ -45,7 +45,7 @@ export const columns = [
     Filter: SliderColumnFilter,
     Cell: ({ cell }) => {
       return (
-        <NavLink className={'px-10'} to={`${cell.row.values.id}`}>
+        <NavLink className={'px-10'} to={`/user/${cell.row.values.id}`}>
           {cell.value}
         </NavLink>
       );
@@ -57,7 +57,7 @@ export const columns = [
     Filter: NumberRangeColumnFilter,
     Cell: ({ cell }) => {
       return (
-        <NavLink className={'px-10'} to={`${cell.row.values.id}`}>
+        <NavLink className={'px-10'} to={`/user/${cell.row.values.id}`}>
           {cell.value}
         </NavLink>
       );
@@ -68,11 +68,7 @@ export const columns = [
     accessor: 'country',
     Filter: SelectColumnFilter,
     Cell: ({ cell }) => {
-      return (
-        <NavLink className={'px-10'} to={`${cell.row.values.id}`}>
-          {cell.value}
-        </NavLink>
-      );
+      return <NavLink to={`/user/${cell.row.values.id}`}>{cell.value}</NavLink>;
     },
   },
   {

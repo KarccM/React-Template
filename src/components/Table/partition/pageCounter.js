@@ -5,7 +5,7 @@ const PageCounter = ({ pageIndex, pageOptions }) => {
     <div className="flex gap-x-2">
       Page
       <stronge class="font-semibold">
-        {pageIndex + 1} of {pageOptions.length}
+        {1 + pageIndex} of {pageOptions.length}
       </stronge>
     </div>
   );
