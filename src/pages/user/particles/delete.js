@@ -1,6 +1,6 @@
 import React from 'react';
 import { useMutation, useQueryClient } from 'react-query';
-import { deleteUsers } from '../../api/usersApi';
+import { deleteUsers } from '../../../api/usersApi';
 
 const Delete = ({ id }) => {
   const queryClient = useQueryClient();

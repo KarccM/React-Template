@@ -13,11 +13,9 @@ export const NumberRangeColumnFilter = ({
         value={filterValue[0] || ''}
         type="number"
         onChange={(e) => {
+          e.preventDefault();
           const val = e.target.value;
-          setFilter((old = []) => [
-            val ? parseInt(val, 10) : undefined,
-            old[1],
-          ]);
+          setFilter((old = []) => [val ? parseInt(val, 10) : 0, old[1]]);
         }}
       />
       to
@@ -26,11 +24,9 @@ export const NumberRangeColumnFilter = ({
         value={selectFiled + filterValue[1] || ''}
         type="number"
         onChange={(e) => {
+          e.preventDefault();
           const val = e.target.value;
-          setFilter((old = []) => [
-            old[0],
-            val ? parseInt(val, 10) : undefined,
-          ]);
+          setFilter((old = []) => [old[0], val ? parseInt(val, 10) : 0]);
         }}
       />
     </div>

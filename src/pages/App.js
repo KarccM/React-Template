@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { AuthProvider } from '../context/Auth';
 import { RouterProvider } from 'react-router-dom';
-import { router } from '../Containers/router';
+import { router } from '../components/routes';
 const App = () => {
   const queryClient = new QueryClient();
   return (

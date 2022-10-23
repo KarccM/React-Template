@@ -1,80 +1,73 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { resolver } from '../../Containers/users/add';
 import Input from '../../components/material-input-fields/material.input.tsx';
 import { useMutation, useQueryClient } from 'react-query';
 import { addUsers } from '../../api/usersApi';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { useAuthState } from '../../context/Auth';
-import Error401 from '../../components/error403';
-const Add = () => {
-  const { control, handleSubmit, errors } = useForm(resolver);
+import { useNavigate } from 'react-router-dom';
+import { addResolver } from './data';
+
+const Add = ({ lastPage, setShowAddForm }) => {
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ addResolver });
   const queryClient = useQueryClient();
   const addUserMutation = useMutation(addUsers, {
     onSuccess: () => {
       queryClient.invalidateQueries('users');
     },
   });
-
   const navigate = useNavigate();
   const onSubmit = (data) => {
+    console.log(`errors`, errors);
     addUserMutation.mutate(data);
-    navigate('/users/?pageNumber=49');
+    setShowAddForm(false);
+    navigate(`/users/?pageNumber=${lastPage}`);
   };
 
-  const { isAuthenticated } = useAuthState();
-
   return (
-    <>
-      {isAuthenticated ? (
-        <div className="flex h-screen justify-center items-center bg-blue-200">
-          <form
-            className="flex flex-col bg-gray-50 p-8 border rounded-md gap-y-4 text-center text-xl"
-            onSubmit={handleSubmit(onSubmit)}
-          >
-            <Input
-              name={'first_name'}
-              control={control}
-              error={errors?.first_name ? true : false}
-            />
-            <Input
-              name={'last_name'}
-              control={control}
-              error={errors?.last_name ? true : false}
-            />
-            <Input
-              name={'country'}
-              control={control}
-              error={errors?.country ? true : false}
-            />
-            <Input
-              name={'salary'}
-              control={control}
-              error={errors?.salary ? true : false}
-            />
-            <Input
-              error={errors?.age ? true : false}
-              name={'age'}
-              control={control}
-            />
-            <button
-              className="bg-red-500 rounded-md text-white px-2"
-              type="submit"
-            >
-              ADD user
-            </button>
-            <NavLink
-              className="bg-gray-500 rounded-md text-white px-2"
-              to={'/users'}
-            >
-              Cancel
-            </NavLink>
-          </form>
-        </div>
-      ) : (
-        <Error401 />
-      )}
-    </>
+    <div className="flex h-screen justify-center items-center bg-blue-200">
+      <form
+        className="flex flex-col bg-gray-50 p-8 border rounded-md gap-y-4 text-center text-xl"
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <Input
+          name="first_name"
+          control={control}
+          error={errors?.first_name ? true : false}
+        />
+        <Input
+          name="last_name"
+          control={control}
+          error={errors?.last_name ? true : false}
+        />
+        <Input
+          name="country"
+          control={control}
+          error={errors?.country ? true : false}
+        />
+        <Input
+          name="salary"
+          control={control}
+          error={errors?.salary ? true : false}
+        />
+        <Input
+          name="age"
+          control={control}
+          error={errors?.age ? true : false}
+        />
+        <button className="bg-red-500 rounded-md text-white px-2" type="submit">
+          ADD user
+        </button>
+        <button
+          className="bg-gray-500 rounded-md text-white px-2"
+          onClick={() => setShowAddForm(false)}
+        >
+          Cancel
+        </button>
+      </form>
+    </div>
   );
 };
 

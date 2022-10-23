@@ -1,9 +1,9 @@
 import { Controller } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
 import React from 'react';
-import { MaterialInput } from '../../interfaces/input-types.interface';
+import { MaterialInput as MaterialInputType } from '../../interfaces/input-types.interface';
 
-const Input = ({ name, control,defaultValue, error, ...rest }:MaterialInput) => (
+const MaterialInput = ({ name, control,defaultValue, error, ...rest }:MaterialInputType) => (
   <Controller
     name={name}
     control={control}
@@ -12,7 +12,7 @@ const Input = ({ name, control,defaultValue, error, ...rest }:MaterialInput) => 
         sx={{ background: '#FFF' }}
         id="outlined-basic"
         error={error}
-        label={`${name} ${defaultValue? `: ${defaultValue}`:''}`}
+        label={name}
         variant="outlined"
         {...field}
         {...rest}
@@ -21,4 +21,4 @@ const Input = ({ name, control,defaultValue, error, ...rest }:MaterialInput) => 
   />
 );
 
-export default Input;
+export default MaterialInput;
