@@ -11,7 +11,7 @@ const Add = ({ lastPage, setShowAddForm }) => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm({ addResolver });
+  } = useForm({ resolver: addResolver });
   const queryClient = useQueryClient();
   const addUserMutation = useMutation(addUsers, {
     onSuccess: () => {

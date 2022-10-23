@@ -9,7 +9,7 @@ const Register = () => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm({ registerResolver });
+  } = useForm({ resolver: registerResolver });
 
   const onSubmit = (data) => {
     console.log('data: ', data);
