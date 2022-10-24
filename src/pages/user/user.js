@@ -1,6 +1,10 @@
 import React from 'react';
 import { useQuery } from 'react-query';
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import {
+  Navigate,
+  useNavigate,
+  useParams,
+} from 'react-router-dom';
 import { getUserById } from '../../api/usersApi';
 import { useForm } from 'react-hook-form';
 import { updateUsers } from '../../api/usersApi';
@@ -10,14 +14,15 @@ import { userResolver } from './data';
 import Edit from './particles/edit';
 import View from './particles/view';
 const User = () => {
-  const { id } = useParams();
   const [editMode, setEditMode] = React.useState(false);
+  const { id } = useParams();
   const {
     isLoading,
     isError,
     isFetching,
     data: user,
-  } = useQuery([`user-${id}`, id], getUserById);
+  } = useQuery(getUserByIdDetailQuery(id));
+
   const {
     control,
     handleSubmit,
@@ -79,3 +84,18 @@ const User = () => {
 };
 
 export default User;
+
+const getUserByIdDetailQuery = (id) => ({
+  queryKey: [`user-${id}`],
+  queryFn: async () => getUserById(id),
+});
+
+export const loader =
+  (queryClient) =>
+  async ({ params }) => {
+    const query = getUserByIdDetailQuery(params.id);
+    return (
+      queryClient.getQueryData(query.queryKey) ??
+      (await queryClient.fetchQuery(query))
+    );
+  };

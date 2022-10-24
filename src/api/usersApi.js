@@ -14,10 +14,12 @@ export const getUsers = async () => {
   return response.data;
 };
 
-export const getUserById = async ({ queryKey }) => {
-  const id = queryKey[1];
-  const response = await userApi.get(`/${id}`);
-  return response.data;
+export const getUserById = async (id) => {
+  if (id) {
+    const response = await userApi.get(`/${id}`);
+    return response.data;
+  }
+  throw { message: "Can't get Data", status: 500 };
 };
 export const addUsers = async (user) => {
   return await userApi.post('/', user);

@@ -1,57 +1,37 @@
-import { createBrowserRouter } from 'react-router-dom';
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+} from 'react-router-dom';
 import Login from '../../pages/auth/login';
 import Register from '../../pages/auth/register';
 import Home from '../../pages/Home';
-import GuestRoute from './guest.route';
-import AuthRoute from './auth.route';
 import Users from '../../pages/user/users';
 import Error404 from '../error404';
-import User from '../../pages/user/user';
+import User, { loader as userLoader } from '../../pages/user/user';
 import Add from '../../pages/user/add';
-export const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Home />,
-  },
-  {
-    path: '/login',
-    element: (
-      <GuestRoute>
-        <Login />
-      </GuestRoute>
-    ),
-  },
-  {
-    path: '/register',
-    element: (
-      <GuestRoute>
-        <Register />
-      </GuestRoute>
-    ),
-  },
-  {
-    path: '/users/*',
-    element: (
-      <AuthRoute>
-        <Users />
-      </AuthRoute>
-    ),
-    errorElement: <Error404 />,
-  },
-  {
-    path: '/users/add',
-    element: (
-      <AuthRoute>
-        <Add />
-      </AuthRoute>
-    ),
-  },
-  {
-    path: '/user/:id',
-    element: (
-      <AuthRoute>
-        <User />
-      </AuthRoute>
-    ),
-  },
-]);
+import RootLayout from '../root.layout';
+import { QueryClient } from 'react-query';
+import UserError from '../../pages/user/user.error';
+
+const queryClient = new QueryClient();
+
+export const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<RootLayout />} errorElement={<Error404 />}>
+      <Route index element={<Home />} />
+      <Route path="login" element={<Login />} />
+      <Route path="register" element={<Register />} />
+      <Route path="user">
+        <Route path="add" element={<Add />} />
+        <Route
+          path=":id"
+          element={<User />}
+          errorElement={<UserError />}
+          loader={userLoader(queryClient)}
+        />
+      </Route>
+      <Route path="users" element={<Users />} />
+    </Route>
+  )
+);

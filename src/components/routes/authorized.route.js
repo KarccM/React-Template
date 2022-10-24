@@ -1,9 +1,9 @@
 import { Navigate } from 'react-router-dom';
 import { useAuthState } from '../../context/Auth';
 
-const GuestRoute = ({ children }) => {
+const AuthorizedRoute = ({ children }) => {
   const { isAuthenticated } = useAuthState();
-  return !isAuthenticated ? children : <Navigate to="/" />;
+  return isAuthenticated ? children : <Navigate to="/" />;
 };
 
-export default GuestRoute;
+export default AuthorizedRoute;
